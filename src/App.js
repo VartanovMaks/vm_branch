@@ -2,24 +2,18 @@ import './App.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-function tick(){
-  const element = (
-      <div>
-        <h1>Hello, world</h1>
-        <h2> It is {new Date().toLocaleTimeString()}...</h2>
-      </div>
-  );
-  ReactDOM.render(element, document.getElementById('root'));
+function Welcome(props) {
+    return <h1>Привет, {props.name}</h1>;
 }
 
 function App() {
-
-      return (
-        <div className="App">
-            {setInterval(tick,1000)}
+    return (
+        <div>
+            <Welcome name="Алиса" />
+            <Welcome name="Базилио" />
+            <Welcome name="Буратино" />
         </div>
-      );
-
+    );
 }
 
 export default App;
