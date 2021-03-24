@@ -9,7 +9,7 @@ class Clock extends React.Component {
     componentDidMount() {
         this.timedId = setInterval(
             ()=>this.tick(),
-            1000
+            this.props.interval
         );
     }
     componentWillUnmount() {
@@ -32,7 +32,9 @@ function App() {
 
     return (
         <div className="App">
-           <Clock />
+           <Clock interval={1000}/>
+            <Clock interval={2000}/>
+            <Clock interval={3000}/>
         </div>
     );
 
