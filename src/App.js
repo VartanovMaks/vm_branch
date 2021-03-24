@@ -1,43 +1,76 @@
 import './App.css';
 import React from 'react';
 
-class Clock extends React.Component {
+function UserGreeting(props) {
+    return <h1>С возвращением!</h1>;
+}
+
+function GuestGreeting(props) {
+    return <h1>Войдите, пожалуйста.</h1>;
+}
+
+function LoginButton(props) {
+    return (
+        <button onClick={props.onClick}>
+            Войти
+        </button>
+    );
+}
+
+function LogoutButton(props) {
+    return (
+        <button onClick={props.onClick}>
+            Выйти
+        </button>
+    );
+}
+function Greeting(props) {
+    const isLoggedIn = props.isLoggedIn;
+    if (isLoggedIn) {
+        return <UserGreeting />;
+        }
+    return <GuestGreeting />;
+}
+
+
+class LoginControl extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {date: new Date()};
+        this.handleLoginClick = this.handleLoginClick.bind(this);
+        this.handleLogoutClick = this.handleLogoutClick.bind(this);
+        this.state = {isLoggedIn: false};
     }
-    componentDidMount() {
-        this.timedId = setInterval(
-            ()=>this.tick(),
-            this.props.interval
-        );
+
+    handleLoginClick() {
+        this.setState({isLoggedIn: true});
     }
-    componentWillUnmount() {
-        clearInterval(this.timerID);
+
+    handleLogoutClick() {
+        this.setState({isLoggedIn: false});
     }
-    tick() {
-        this.setState({date: new Date()});
-    }
-     render() {
+
+    render() {
+        const isLoggedIn = this.state.isLoggedIn;
+        let button;
+        if (isLoggedIn) {
+            button = <LogoutButton onClick={this.handleLogoutClick} />;
+        } else {
+            button = <LoginButton onClick={this.handleLoginClick} />;
+        }
         return (
             <div>
-                <h1>Привет, мир!</h1>
-                <h2>Сейчас {this.state.date.toLocaleTimeString()}.</h2>
-            </div>
+                <Greeting isLoggedIn={isLoggedIn} />        {button}      </div>
         );
     }
 }
 
-function App() {
-
-    return (
-        <div className="App">
-           <Clock interval={1000}/>
-            <Clock interval={2000}/>
-            <Clock interval={3000}/>
-        </div>
-    );
-
+function App(){
+    return <LoginControl />
 }
+
+// ReactDOM.render(
+//     <LoginControl />,
+//     document.getElementById('root')
+// );
 
 export default App;
